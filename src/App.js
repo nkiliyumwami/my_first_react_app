@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 
 import './App.css';
 
@@ -6,6 +6,13 @@ import './App.css';
 const App = () => {
   //React state 
 const [counter, setCounter] = useState(0);
+
+//React hooks 
+//This code will have toa load as soon as th page load and will load once
+//because of the dependency, empty array at the end.
+useEffect(() => {
+  setCounter(100)
+}, [])
 
 
   return(
