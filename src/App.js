@@ -1,6 +1,6 @@
 import './App.css';
 
-//create a component
+//create a component/pass in props/destructuring
 const Person = ({firstName, lastName, age}) => {
   return (
     <>
