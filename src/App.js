@@ -1,24 +1,18 @@
+import  { useState } from 'react';
+
 import './App.css';
 
-//create a component/pass in props/destructuring
-const Person = ({firstName, lastName, age}) => {
-  return (
-    <>
-    <h1>FirstName: {firstName}</h1>
-    <h1>LastName: {lastName}</h1>
-    <h1>Age: {age}</h1>
-    </>
-  )
-}
 
 const App = () => {
+  //React state 
+const [counter, setCounter] = useState(0);
+
+
   return(
     <div className="App">
-      <Person firstName={'Mary'} lastName={'Doe'} age={35} />
-      <Person firstName={'Peter'} lastName={'Pan'} age={15}  />
-      <Person firstName={'Clarisse'} lastName={'Ingabire'} age={34}  />
-      <Person firstName={'Chantal'} lastName={'Uwineza'} age={89} />
-      
+      <button onClick={() => setCounter(prevCounter => prevCounter -1)} > - </button>
+      <h1>{counter}</h1>
+      <button onClick={() => setCounter(prevCounter => prevCounter + 1)}> + </button>
     </div>
   )
 }
