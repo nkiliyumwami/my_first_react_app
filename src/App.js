@@ -1,27 +1,76 @@
-import  { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react'
 
-import './App.css';
+import './App.css'
+import SearchIcon from './search.svg'
+import MovieCard from './MovieCard'
+
+
+//movieDB apiUrl+key
+const API_URL = 'http://www.omdbapi.com?apikey=2e18ba81'
+
+// const movie1 = {
+//     "Title": "Amazing SpiderMan",
+//     "Year": "2022",
+//     "Type": "movie",
+//     "Poster": "N/A"
+// }
 
 
 const App = () => {
-  //React state 
-const [counter, setCounter] = useState(0);
+    //Create a state to get /hold all movies
+    const [ movies, setMovies] = useState([])
 
-//React hooks 
-//This code will have toa load as soon as th page load and will load once
-//because of the dependency, empty array at the end.
+    //Create a state to search movie(search button functionality)
+    const [searchTerm, setSearchTerm] = useState(' ')
+
+//Get the movies once a page load
 useEffect(() => {
-  alert(`You changed the counter to ${counter}`)
-}, [counter])
+    searchMovies('Batman')
+}, []);
+
+//get the data(movies) as soon as the page load
+const searchMovies = async ( title) => {
+    const response = await fetch(`${API_URL}&s=${title}`);
+    const data = await response.json();
+
+    setMovies(data.Search);
+    
+};
 
 
-  return(
-    <div className="App">
-      <button onClick={() => setCounter(prevCounter => prevCounter -1)} > - </button>
-      <h1>{counter}</h1>
-      <button onClick={() => setCounter(prevCounter => prevCounter + 1)}> + </button>
+  return (
+    <div className='app'>
+        <h1>MovieLand</h1>
+
+        <div className="search">
+            <input 
+                value={searchTerm}
+                placeholder='Search for movies' 
+                onChange={(e) => setSearchTerm(e.target.value)}/>
+
+            <img 
+                src={SearchIcon} 
+                alt='search' 
+                onClick={() => searchMovies(searchTerm.toLowerCase())} />
+        </div>
+
+        {/* Render movies: Check if there is a movie */}
+
+        {movies?.length > 0 ? (
+        <div className="container">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty">
+          <h2>No movies found</h2>
+        </div>
+      )}
+        
     </div>
   )
-}
+};
 
-export default App;
+
+export default App
